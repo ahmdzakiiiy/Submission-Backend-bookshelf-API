@@ -104,16 +104,27 @@ const getAllBooksHandler = (request, h) => {
 
   let filterBook = books;
 
-  if (typeof name !== 'undefined') {
-    filterBook = books.filter((book) => book.name.toLowerCase().includes(name.toLowerCase()));
+  if (name != null) {
+    filterBook = filterBook.filter((book) =>
+      book.name.toLowerCase().includes(name.toLowerCase())
+    );
   }
 
-  if (typeof reading !== 'undefined') {
-    filterBook = books.filter((book) => Number(book.reading) === Number(reading));
+
+  if (reading != null) {
+    const readingValue = Number(reading);
+
+    if (!isNaN(readingValue)) {
+      filterBook = filterBook.filter((book) => book.reading === readingValue);
+    }
   }
 
-  if (typeof finished !== 'undefined') {
-    filterBook = books.filter((book) => Number(book.finished) === Number(finished));
+  if (finished != null) {
+    const finishedValue = Number(finished);
+
+    if (!isNaN(finishedValue)) {
+      filterBook = filterBook.filter((book) => book.finished === finishedValue);
+    }
   }
 
   const listBook = filterBook.map((book) => ({
